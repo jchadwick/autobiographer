@@ -1,6 +1,13 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { authController } from '../controllers/auth';
 import { requireAuth } from '../middleware/auth';
+
+interface AuthRequest extends Request {
+  user?: {
+    userId: string;
+    email: string;
+  };
+}
 
 const router = Router();
 
@@ -11,7 +18,7 @@ router.post('/register', authController.register);
 router.post('/login', authController.login);
 
 // GET /api/auth/me - Get current user (protected route)
-router.get('/me', requireAuth, (req, res) => {
+router.get('/me', requireAuth, (req: AuthRequest, res: Response) => {
   res.json({ user: req.user });
 });
 

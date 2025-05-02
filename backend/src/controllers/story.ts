@@ -1,11 +1,18 @@
 import { Request, Response } from 'express';
 import { storyService } from '../services/story';
 
+interface AuthRequest extends Request {
+  user?: {
+    userId: string;
+    email: string;
+  };
+}
+
 export const storyController = {
   /**
    * Create a new story
    */
-  async createStory(req: Request, res: Response): Promise<void> {
+  async createStory(req: AuthRequest, res: Response): Promise<void> {
     try {
       const userId = req.user?.userId;
       if (!userId) {
@@ -28,7 +35,7 @@ export const storyController = {
   /**
    * Get a story by ID
    */
-  async getStory(req: Request, res: Response): Promise<void> {
+  async getStory(req: AuthRequest, res: Response): Promise<void> {
     try {
       const userId = req.user?.userId;
       if (!userId) {
@@ -51,7 +58,7 @@ export const storyController = {
   /**
    * Get all stories for the current user
    */
-  async getUserStories(req: Request, res: Response): Promise<void> {
+  async getUserStories(req: AuthRequest, res: Response): Promise<void> {
     try {
       const userId = req.user?.userId;
       if (!userId) {
@@ -73,7 +80,7 @@ export const storyController = {
   /**
    * Update a story
    */
-  async updateStory(req: Request, res: Response): Promise<void> {
+  async updateStory(req: AuthRequest, res: Response): Promise<void> {
     try {
       const userId = req.user?.userId;
       if (!userId) {
@@ -97,7 +104,7 @@ export const storyController = {
   /**
    * Delete a story
    */
-  async deleteStory(req: Request, res: Response): Promise<void> {
+  async deleteStory(req: AuthRequest, res: Response): Promise<void> {
     try {
       const userId = req.user?.userId;
       if (!userId) {

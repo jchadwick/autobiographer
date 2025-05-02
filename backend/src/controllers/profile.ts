@@ -1,11 +1,18 @@
 import { Request, Response } from 'express';
 import { profileService } from '../services/profile';
 
+interface AuthRequest extends Request {
+  user?: {
+    userId: string;
+    email: string;
+  };
+}
+
 export const profileController = {
   /**
    * Get user profile
    */
-  async getProfile(req: Request, res: Response): Promise<void> {
+  async getProfile(req: AuthRequest, res: Response): Promise<void> {
     try {
       const userId = req.user?.userId;
       if (!userId) {
@@ -27,7 +34,7 @@ export const profileController = {
   /**
    * Update user profile
    */
-  async updateProfile(req: Request, res: Response): Promise<void> {
+  async updateProfile(req: AuthRequest, res: Response): Promise<void> {
     try {
       const userId = req.user?.userId;
       if (!userId) {

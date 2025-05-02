@@ -4,7 +4,7 @@ import { env } from '../config/env';
 
 interface AuthRequest extends Request {
   user?: {
-    id: string;
+    userId: string;
     email: string;
   };
 }
@@ -22,10 +22,12 @@ export const authMiddleware = async (
       return;
     }
 
-    const decoded = jwt.verify(token, env.jwtSecret) as { id: string; email: string };
+    const decoded = jwt.verify(token, env.jwtSecret) as { userId: string; email: string };
     req.user = decoded;
     next();
   } catch {
     res.status(401).json({ error: 'Invalid token' });
   }
 };
+
+export const requireAuth = authMiddleware;
