@@ -1,4 +1,12 @@
+import { PrismaClient } from '@prisma/client';
+import { writeFile } from 'fs/promises';
+import { join } from 'path';
+import { v4 as uuidv4 } from 'uuid';
+import { Story } from '../types';
 import { db } from './database';
+
+const prisma = new PrismaClient();
+const CONTENT_DIR = join(__dirname, '../../content');
 
 export class StoryError extends Error {
   constructor(message: string) {
@@ -7,25 +15,32 @@ export class StoryError extends Error {
   }
 }
 
-export interface Story {
-  id: string;
-  title: string;
-  content: string;
-  userId: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
 export const storyService = {
   /**
    * Create a new story
    */
   async createStory(userId: string, data: { title: string; content: string }): Promise<Story> {
-    return db.createStory({
-      title: data.title,
-      content: data.content,
-      userId,
+    const contentFile = `${uuidv4()}.txt`;
+    const contentPath = join(CONTENT_DIR, contentFile);
+
+    await writeFile(contentPath, data.content, 'utf-8');
+
+    const story = await prisma.story.create({
+      data: {
+        title: data.title,
+        contentFile,
+        userId,
+      },
     });
+
+    return {
+      id: story.id,
+      title: story.title,
+      content: data.content,
+      createdAt: story.createdAt,
+      updatedAt: story.updatedAt,
+      userId: story.userId,
+    };
   },
 
   /**
@@ -33,7 +48,7 @@ export const storyService = {
    */
   async getStory(storyId: string, userId: string): Promise<Story> {
     const story = await db.getStoryById(storyId);
-    
+
     if (!story) {
       throw new StoryError('Story not found');
     }
@@ -56,7 +71,11 @@ export const storyService = {
   /**
    * Update a story
    */
-  async updateStory(storyId: string, userId: string, data: { title?: string; content?: string }): Promise<Story> {
+  async updateStory(
+    storyId: string,
+    userId: string,
+    data: { title?: string; content?: string }
+  ): Promise<Story> {
     // Check if story exists and user owns it
     const story = await this.getStory(storyId, userId);
 
@@ -77,4 +96,4 @@ export const storyService = {
     // Delete the story
     await db.deleteStory(storyId);
   },
-}; 
+};
