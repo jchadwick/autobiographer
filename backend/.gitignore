@@ -1,3 +1,33 @@
-node_modules
+# Dependencies
+node_modules/
 # Keep environment variables out of version control
 .env
+
+# Build output
+dist/
+build/
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+# Storage
+storage/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

@@ -21,11 +21,11 @@ model User {
 }
 
 model Story {
-  id        String   @id @default(uuid())
-  title     String
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  id            String   @id @default(uuid())
+  title         String
+  contentFile   String   // Stores the filename of the content
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
 }
