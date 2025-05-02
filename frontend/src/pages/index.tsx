@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-const HomePage: React.FC = () => {
+function HomePage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-16">
@@ -20,6 +20,6 @@ const HomePage: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 export default HomePage;

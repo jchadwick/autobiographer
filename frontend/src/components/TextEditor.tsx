@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import debounce from 'lodash/debounce';
 import 'react-quill/dist/quill.snow.css';
@@ -27,45 +27,55 @@ const TOOLBAR_OPTIONS = [
   ['clean'],
 ];
 
-export const TextEditor: React.FC<TextEditorProps> = ({
+export function TextEditor({
   initialContent = '',
   onChange,
   onAutoSave,
   placeholder = 'Start writing...',
   minHeight = '150px',
   autoSaveInterval = 3000, // default to 3 seconds
-}) => {
+}: TextEditorProps) {
   const [content, setContent] = useState(initialContent);
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const debouncedSaveRef = useRef<ReturnType<typeof debounce>>();
 
   // Create a debounced auto-save function
   const debouncedAutoSave = useCallback(
-    debounce(async (text: string) => {
+    (text: string): void => {
       if (!onAutoSave) return;
 
-      try {
-        setIsSaving(true);
-        await onAutoSave(text);
-        setLastSaved(new Date());
-      } catch (error) {
-        console.error('Auto-save failed:', error);
-      } finally {
-        setIsSaving(false);
+      const saveContent = async () => {
+        try {
+          setIsSaving(true);
+          await onAutoSave(text);
+          setLastSaved(new Date());
+        } catch (error) {
+          console.error('Auto-save failed:', error);
+        } finally {
+          setIsSaving(false);
+        }
+      };
+
+      // Create or update the debounced function
+      if (!debouncedSaveRef.current) {
+        debouncedSaveRef.current = debounce(saveContent, autoSaveInterval);
       }
-    }, autoSaveInterval),
+
+      debouncedSaveRef.current();
+    },
     [onAutoSave, autoSaveInterval]
   );
 
   // Clean up the debounced function on unmount
   useEffect(() => {
     return () => {
-      debouncedAutoSave.cancel();
+      debouncedSaveRef.current?.cancel();
     };
-  }, [debouncedAutoSave]);
+  }, []);
 
   const handleChange = useCallback(
-    (newContent: string) => {
+    (newContent: string): void => {
       setContent(newContent);
       onChange?.(newContent);
 
@@ -101,4 +111,4 @@ export const TextEditor: React.FC<TextEditorProps> = ({
       )}
     </div>
   );
-};
+}

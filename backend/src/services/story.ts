@@ -78,6 +78,9 @@ export const storyService = {
   ): Promise<Story> {
     // Check if story exists and user owns it
     const story = await this.getStory(storyId, userId);
+    if (!story) {
+      throw new StoryError(`Story with id ${storyId} not found`);
+    }
 
     // Update the story
     return db.updateStory(storyId, {

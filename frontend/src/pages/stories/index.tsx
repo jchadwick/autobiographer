@@ -9,15 +9,15 @@ interface Story {
   updatedAt: string;
 }
 
-const StoriesPage: React.FC = () => {
+function StoriesPage(): JSX.Element {
   const [stories, setStories] = useState<Story[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchStories = async () => {
+    const fetchStories = async (): Promise<void> => {
       try {
-        const response = await api.get('/stories');
+        const response = await api.get<Story[]>('/stories');
         setStories(response.data);
         setError(null);
       } catch (err) {
@@ -28,7 +28,7 @@ const StoriesPage: React.FC = () => {
       }
     };
 
-    fetchStories();
+    void fetchStories();
   }, []);
 
   if (isLoading) {
@@ -63,7 +63,7 @@ const StoriesPage: React.FC = () => {
 
       {stories.length === 0 ? (
         <p className="text-gray-600">
-          You haven't created any stories yet.{' '}
+          You haven&apos;t created any stories yet.{' '}
           <Link href="/stories/new" className="text-blue-500 hover:underline">
             Create your first story
           </Link>
@@ -87,6 +87,6 @@ const StoriesPage: React.FC = () => {
       )}
     </div>
   );
-};
+}
 
 export default StoriesPage;

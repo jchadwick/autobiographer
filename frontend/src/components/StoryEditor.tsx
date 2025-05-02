@@ -12,14 +12,14 @@ interface StoryEditorProps {
   isSaving?: boolean;
 }
 
-export const StoryEditor: React.FC<StoryEditorProps> = ({
+export function StoryEditor({
   storyId,
   initialTitle = '',
   initialContent = '',
   onSave,
   onCancel,
   isSaving = false,
-}) => {
+}: StoryEditorProps) {
   const [title, setTitle] = useState(initialTitle);
   const [content, setContent] = useState(initialContent);
   const [isAutoSaving, setIsAutoSaving] = useState(false);
@@ -93,4 +93,4 @@ export const StoryEditor: React.FC<StoryEditorProps> = ({
       </div>
     </div>
   );
-};
+}

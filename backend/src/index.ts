@@ -5,6 +5,7 @@ import { authRouter } from './routes/auth';
 import { profileRouter } from './routes/profile';
 import { storyRouter } from './routes/story';
 import { env } from './config/env';
+import { Request, Response, NextFunction } from 'express';
 
 const app = express();
 
@@ -21,7 +22,7 @@ app.use('/api/profile', profileRouter);
 app.use('/api/stories', storyRouter);
 
 // Error handling middleware
-app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
+app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
   console.error(err.stack);
   res.status(500).json({ error: 'Internal server error' });
 });

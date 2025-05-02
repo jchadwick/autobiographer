@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { StoryEditor } from '../../components/StoryEditor';
 import api from '../../utils/api';
 
-const NewStoryPage: React.FC = () => {
+function NewStoryPage(): JSX.Element {
   const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
 
@@ -30,6 +30,6 @@ const NewStoryPage: React.FC = () => {
       <StoryEditor onSave={handleSave} onCancel={handleCancel} isSaving={isSaving} />
     </div>
   );
-};
+}
 
 export default NewStoryPage;

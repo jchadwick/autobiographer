@@ -5,7 +5,7 @@ export const registrationController = {
   /**
    * Handle user registration
    */
-  async register(req: Request, res: Response) {
+  async register(req: Request, res: Response): Promise<Response | void> {
     try {
       const { email, password, name } = req.body;
 

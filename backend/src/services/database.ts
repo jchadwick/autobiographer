@@ -1,29 +1,29 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, User, Story } from '@prisma/client';
 import { fileStorage } from './fileStorage';
 
 const prisma = new PrismaClient();
 
 export const db = {
   // User operations
-  async createUser(data: { email: string; password: string; name?: string }) {
+  async createUser(data: { email: string; password: string; name?: string }): Promise<User> {
     return prisma.user.create({
       data,
     });
   },
 
-  async getUserByEmail(email: string) {
+  async getUserByEmail(email: string): Promise<User | null> {
     return prisma.user.findUnique({
       where: { email },
     });
   },
 
-  async getUserById(id: string) {
+  async getUserById(id: string): Promise<User | null> {
     return prisma.user.findUnique({
       where: { id },
     });
   },
 
-  async updateUser(id: string, data: { name?: string }) {
+  async updateUser(id: string, data: { name?: string }): Promise<User> {
     return prisma.user.update({
       where: { id },
       data,
@@ -31,7 +31,7 @@ export const db = {
   },
 
   // Story operations
-  async createStory(data: { title: string; content: string; userId: string }) {
+  async createStory(data: { title: string; content: string; userId: string }): Promise<Story> {
     const contentFile = await fileStorage.saveTextContent(data.content);
     return prisma.story.create({
       data: {
@@ -42,7 +42,7 @@ export const db = {
     });
   },
 
-  async getStoryById(id: string) {
+  async getStoryById(id: string): Promise<(Story & { content: string }) | null> {
     const story = await prisma.story.findUnique({
       where: { id },
       include: { user: true },
@@ -59,7 +59,7 @@ export const db = {
     return null;
   },
 
-  async getStoriesByUserId(userId: string) {
+  async getStoriesByUserId(userId: string): Promise<(Story & { content: string })[]> {
     const stories = await prisma.story.findMany({
       where: { userId },
       orderBy: { updatedAt: 'desc' },
@@ -76,7 +76,10 @@ export const db = {
     );
   },
 
-  async updateStory(id: string, data: { title?: string; content?: string }) {
+  async updateStory(
+    id: string,
+    data: { title?: string; content?: string }
+  ): Promise<Story & { content: string }> {
     const story = await prisma.story.findUnique({ where: { id } });
     if (!story) throw new Error('Story not found');
 
@@ -99,7 +102,7 @@ export const db = {
     };
   },
 
-  async deleteStory(id: string) {
+  async deleteStory(id: string): Promise<Story> {
     const story = await prisma.story.findUnique({ where: { id } });
     if (!story) throw new Error('Story not found');
 

@@ -12,7 +12,7 @@ interface Story {
   updatedAt: string;
 }
 
-const StoryPage: React.FC = () => {
+function StoryPage(): JSX.Element {
   const router = useRouter();
   const { id } = router.query as { id: string };
 
@@ -143,6 +143,6 @@ const StoryPage: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 export default StoryPage;
