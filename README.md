@@ -43,12 +43,14 @@ A comprehensive application for creating personal autobiographies through guided
 ### Installation
 
 1. Clone the repository
+
    ```
    git clone https://github.com/yourusername/autobiographer.git
    cd autobiographer
    ```
 
 2. Install dependencies
+
    ```
    npm run install:all
    ```
@@ -59,16 +61,19 @@ A comprehensive application for creating personal autobiographies through guided
 ### Development Workflow
 
 1. Start the development servers (both frontend and backend)
+
    ```
    npm start
    ```
 
 2. Run linting checks
+
    ```
    npm run lint
    ```
 
 3. Fix linting issues automatically
+
    ```
    npm run lint:fix
    ```

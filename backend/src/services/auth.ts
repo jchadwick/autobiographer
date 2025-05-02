@@ -14,7 +14,10 @@ export const authService = {
   /**
    * Login user with email and password
    */
-  async login(data: { email: string; password: string }): Promise<{ token: string; user: { id: string; email: string; name?: string } }> {
+  async login(data: {
+    email: string;
+    password: string;
+  }): Promise<{ token: string; user: { id: string; email: string; name?: string } }> {
     // Get user by email
     const user = await db.getUserByEmail(data.email);
     if (!user) {
@@ -29,9 +32,9 @@ export const authService = {
 
     // Generate JWT token
     const token = jwt.sign(
-      { 
+      {
         userId: user.id,
-        email: user.email 
+        email: user.email,
       },
       env.jwtSecret,
       { expiresIn: '24h' }
@@ -47,4 +50,4 @@ export const authService = {
       },
     };
   },
-}; 
+};

@@ -11,7 +11,9 @@ export const profileService = {
   /**
    * Get user profile by ID
    */
-  async getProfile(userId: string): Promise<{ id: string; email: string; name?: string; createdAt: Date }> {
+  async getProfile(
+    userId: string
+  ): Promise<{ id: string; email: string; name?: string; createdAt: Date }> {
     const user = await db.getUserById(userId);
     if (!user) {
       throw new ProfileError('User not found');
@@ -28,7 +30,10 @@ export const profileService = {
   /**
    * Update user profile
    */
-  async updateProfile(userId: string, data: { name?: string }): Promise<{ id: string; email: string; name?: string }> {
+  async updateProfile(
+    userId: string,
+    data: { name?: string }
+  ): Promise<{ id: string; email: string; name?: string }> {
     // Get current user
     const user = await db.getUserById(userId);
     if (!user) {
@@ -46,4 +51,4 @@ export const profileService = {
       name: updatedUser.name || undefined,
     };
   },
-}; 
+};

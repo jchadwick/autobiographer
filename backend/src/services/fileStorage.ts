@@ -49,4 +49,4 @@ export const fileStorage = {
   async listTextFiles(): Promise<string[]> {
     return fs.readdir(STORAGE_DIR);
   },
-}; 
+};

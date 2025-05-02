@@ -22,4 +22,4 @@ router.put('/:id', storyController.updateStory);
 // DELETE /api/stories/:id - Delete a story
 router.delete('/:id', storyController.deleteStory);
 
-export const storyRouter = router; 
+export const storyRouter = router;

@@ -12,7 +12,11 @@ export const registration = {
   /**
    * Register a new user with email and password
    */
-  async registerUser(data: { email: string; password: string; name?: string }): Promise<{ id: string; email: string; name?: string }> {
+  async registerUser(data: {
+    email: string;
+    password: string;
+    name?: string;
+  }): Promise<{ id: string; email: string; name?: string }> {
     // Validate email format
     if (!auth.validateEmail(data.email)) {
       throw new RegistrationError('Invalid email format');
@@ -47,4 +51,4 @@ export const registration = {
       name: user.name || undefined,
     };
   },
-}; 
+};

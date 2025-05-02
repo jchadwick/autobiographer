@@ -24,15 +24,15 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction): vo
     }
 
     const token = authHeader.split(' ')[1];
-    
+
     // Verify token
     const decoded = jwt.verify(token, env.jwtSecret) as { userId: string; email: string };
-    
+
     // Add user data to request
     req.user = decoded;
-    
+
     next();
   } catch (error) {
     res.status(401).json({ error: 'Invalid token' });
   }
-}; 
+};

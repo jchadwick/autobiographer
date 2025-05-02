@@ -66,7 +66,7 @@ export const db = {
     });
 
     return Promise.all(
-      stories.map(async (story) => {
+      stories.map(async story => {
         const content = await fileStorage.getTextContent(story.contentFile);
         return {
           ...story,
@@ -108,4 +108,4 @@ export const db = {
       where: { id },
     });
   },
-}; 
+};

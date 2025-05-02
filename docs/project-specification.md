@@ -25,21 +25,25 @@ The Autobiographer application is designed to help users create comprehensive au
 ## 4. Core Features
 
 1. **Interactive Question System**
+
    - Curated questions covering various life stages and experiences
    - Ability to skip questions or return to them later
    - Smart follow-up questions based on previous responses
 
 2. **Multimodal Input**
+
    - Text-based input with rich text editing capabilities
    - Voice recording with real-time speech-to-text transcription
    - Option to review and edit transcribed content
 
 3. **Narrative Generation**
+
    - Transformation of question responses into a cohesive third-person narrative
    - Different narrative styles and organizational structures (chronological, thematic)
    - Export capabilities in various formats (PDF, DOCX, EPUB)
 
 4. **Session Management**
+
    - Save and resume autobiography sessions
    - Progress tracking across various life stages
    - Regular auto-saving to prevent data loss
@@ -52,10 +56,12 @@ The Autobiographer application is designed to help users create comprehensive au
 ## 5. Technical Requirements
 
 ### 5.1 Platform
+
 - Initial release: Web application
 - Future expansion: Mobile application (iOS and Android)
 
 ### 5.2 Technology Stack
+
 - **Frontend**: React.js
 - **Backend**: Node.js with Express (or alternative if required)
 - **Database**: TBD based on storage requirements

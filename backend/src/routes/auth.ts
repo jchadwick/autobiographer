@@ -15,4 +15,4 @@ router.get('/me', requireAuth, (req, res) => {
   res.json({ user: req.user });
 });
 
-export const authRouter = router; 
+export const authRouter = router;

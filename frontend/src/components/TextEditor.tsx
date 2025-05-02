@@ -79,10 +79,7 @@ export const TextEditor: React.FC<TextEditorProps> = ({
 
   return (
     <div className="text-editor">
-      <div 
-        className="border rounded-lg overflow-hidden"
-        style={{ minHeight }}
-      >
+      <div className="border rounded-lg overflow-hidden" style={{ minHeight }}>
         <ReactQuill
           theme="snow"
           value={content}
@@ -95,15 +92,13 @@ export const TextEditor: React.FC<TextEditorProps> = ({
       </div>
       {onAutoSave && (
         <div className="mt-2 text-sm text-gray-500">
-          {isSaving ? (
-            'Saving...'
-          ) : lastSaved ? (
-            `Last saved: ${lastSaved.toLocaleTimeString()}`
-          ) : (
-            'Not saved yet'
-          )}
+          {isSaving
+            ? 'Saving...'
+            : lastSaved
+              ? `Last saved: ${lastSaved.toLocaleTimeString()}`
+              : 'Not saved yet'}
         </div>
       )}
     </div>
   );
-}; 
+};

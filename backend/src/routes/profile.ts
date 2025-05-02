@@ -13,4 +13,4 @@ router.get('/', profileController.getProfile);
 // PUT /api/profile - Update user profile
 router.put('/', profileController.updateProfile);
 
-export const profileRouter = router; 
+export const profileRouter = router;
