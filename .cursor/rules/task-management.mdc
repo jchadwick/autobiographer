@@ -1,0 +1,90 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Task Management Standards
+
+Standards for managing and maintaining project tasks.
+
+<rule>
+name: task_management_standards
+description: Standards for managing project tasks and task lists
+filters:
+  # Match task-related files
+  - type: file_extension
+    pattern: "\\.md$"
+  # Match task-related content
+  - type: content
+    pattern: "(?m)^\\s*-\\s*\\[[ x]\\]"
+  # Match task file operations
+  - type: event
+    pattern: "file_edit|file_create"
+
+actions:
+  - type: suggest
+    message: |
+      When managing tasks:
+
+      1. Task List Location:
+         - Keep task lists in PROJECT_ROOT/.tasks/
+         - Main task file should be TASKS.md
+         - Task files should not be in source control
+         - Create task-specific files for large features
+
+      2. Task List Maintenance:
+         - Never delete tasks
+         - Only mark tasks as complete [x] or incomplete [ ]
+         - Move tasks between sections when priorities change
+         - Keep completed tasks in the list for historical record
+         - Add new tasks whenever identified during development
+
+      3. Task Format:
+         ```markdown
+         - [ ] Task description
+         - [x] Completed task
+         ```
+
+      4. Task Organization:
+         - Group tasks by feature/component
+         - Order by priority within groups
+         - Include estimated complexity/effort
+         - Add subtasks for complex items
+         - Track dependencies between tasks
+
+      5. Continuous Task Discovery:
+         - Add new tasks when technical debt is identified
+         - Create tasks for future improvements
+         - Document potential optimizations
+         - Note security considerations
+         - Track accessibility requirements
+
+      6. Task Updates:
+         - Keep original task descriptions
+         - Add notes about implementation decisions
+         - Document any blockers encountered
+         - Track time spent on tasks
+         - Note related tasks or dependencies
+
+examples:
+  - input: |
+      # Original task
+      - [ ] Implement user authentication
+
+      # Updated task (correct)
+      - [x] Implement user authentication
+        Notes:
+        - Used JWT for token management
+        - Added rate limiting
+        - Future consideration: OAuth integration
+
+      # Deleted task (incorrect)
+      [Task removed]
+    output: |
+      Tasks should be marked complete, not deleted.
+      Add notes about implementation and future considerations.
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
