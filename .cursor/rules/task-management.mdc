@@ -35,6 +35,7 @@ actions:
       2. Task List Maintenance:
          - Never delete tasks
          - Only mark tasks as complete [x] or incomplete [ ]
+         - ALWAYS mark tasks as complete immediately after they are completed
          - Move tasks between sections when priorities change
          - Keep completed tasks in the list for historical record
          - Add new tasks whenever identified during development
@@ -63,7 +64,6 @@ actions:
          - Keep original task descriptions
          - Add notes about implementation decisions
          - Document any blockers encountered
-         - Track time spent on tasks
          - Note related tasks or dependencies
 
 examples:

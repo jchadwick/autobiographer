@@ -23,6 +23,13 @@ export const db = {
     });
   },
 
+  async updateUser(id: string, data: { name?: string }) {
+    return prisma.user.update({
+      where: { id },
+      data,
+    });
+  },
+
   // Story operations
   async createStory(data: { title: string; content: string; userId: string }) {
     const contentFile = await fileStorage.saveTextContent(data.content);
@@ -77,13 +84,19 @@ export const db = {
       await fileStorage.updateTextContent(story.contentFile, data.content);
     }
 
-    return prisma.story.update({
+    const updatedStory = await prisma.story.update({
       where: { id },
       data: {
         title: data.title,
         updatedAt: new Date(),
       },
     });
+
+    const content = await fileStorage.getTextContent(updatedStory.contentFile);
+    return {
+      ...updatedStory,
+      content,
+    };
   },
 
   async deleteStory(id: string) {

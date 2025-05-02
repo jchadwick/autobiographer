@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+.ql-editor {
+  min-height: 200px;
+}
+
+.prose {
+  max-width: none;
+} 
