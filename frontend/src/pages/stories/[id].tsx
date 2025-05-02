@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { StoryEditor } from '../../components/StoryEditor';
-import { api } from '../../utils/api';
+import api from '../../utils/api';
 import DOMPurify from 'dompurify';
 
 interface Story {
@@ -15,7 +15,7 @@ interface Story {
 const StoryPage: React.FC = () => {
   const router = useRouter();
   const { id } = router.query as { id: string };
-  
+
   const [story, setStory] = useState<Story | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -139,13 +139,10 @@ const StoryPage: React.FC = () => {
         <p className="text-gray-500 mb-8">
           Last updated: {new Date(story.updatedAt).toLocaleDateString()}
         </p>
-        <div 
-          className="ql-editor p-0" 
-          dangerouslySetInnerHTML={{ __html: sanitizedContent }}
-        />
+        <div className="ql-editor p-0" dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
       </div>
     </div>
   );
 };
 
-export default StoryPage; 
+export default StoryPage;
