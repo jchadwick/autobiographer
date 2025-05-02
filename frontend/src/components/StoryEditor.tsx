@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { TextEditor } from './TextEditor';
-import { api } from '../utils/api';
+import api from '../utils/api';
 import DOMPurify from 'dompurify';
 
 interface StoryEditorProps {
@@ -59,11 +59,11 @@ export const StoryEditor: React.FC<StoryEditorProps> = ({
       <input
         type="text"
         value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={e => setTitle(e.target.value)}
         placeholder="Enter story title..."
         className="w-full p-2 text-2xl font-bold border-b focus:outline-none focus:border-blue-500"
       />
-      
+
       <TextEditor
         initialContent={content}
         onChange={setContent}
@@ -93,4 +93,4 @@ export const StoryEditor: React.FC<StoryEditorProps> = ({
       </div>
     </div>
   );
-}; 
+};
