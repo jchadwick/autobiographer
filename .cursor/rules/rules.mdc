@@ -4,11 +4,11 @@ globs: *.mdc
 ---
 # AI Rules Location
 
-Rules for placing and organizing AI rule files in the repository.
+Rules for placing and organizing Cursor rule files in the repository.
 
 <rule>
-name: ai_rules_location
-description: Standards for placing AI rule files in the correct directory
+name: cursor_rules_location
+description: Standards for placing Cursor rule files in the correct directory
 filters:
   # Match any .mdc files
   - type: file_extension
@@ -23,16 +23,16 @@ filters:
 actions:
   - type: reject
     conditions:
-      - pattern: "^(?!\\/ai-rules\\/.*\\.mdc$)"
-        message: "AI rule files (.mdc) must be placed in the /ai-rules directory"
+      - pattern: "^(?!\\/.cursor\\/rules\\/.*\\.mdc$)"
+        message: "Cursor rule files (.mdc) must be placed in the /.cursor/rules directory"
 
   - type: suggest
     message: |
-      When creating AI rules:
+      When creating Cursor rules:
 
-      1. Always place rule files in PROJECT_ROOT/ai-rules/:
+      1. Always place rule files in PROJECT_ROOT/.cursor/rules/:
          ```
-         /ai-rules/
+         /.cursor/rules/
          ├── your-rule-name.mdc
          ├── another-rule.mdc
          └── ...
@@ -46,7 +46,8 @@ actions:
       3. Directory structure:
          ```
          PROJECT_ROOT/
-         ├── ai-rules/
+         ├── .cursor/
+         │   └── rules/
          │       ├── your-rule-name.mdc
          │       └── ...
          └── ...
@@ -54,7 +55,7 @@ actions:
 
       4. Never place rule files:
          - In the project root
-         - In subdirectories outside /ai-rules
+         - In subdirectories outside /.cursor/rules
          - In any other location
 
 examples:
@@ -65,8 +66,8 @@ examples:
       .rules/my-rule.mdc
 
       # Good: Rule file in correct location
-      /ai-rules/my-rule.mdc
-    output: "Correctly placed AI rule file"
+      /.cursor/rules/my-rule.mdc
+    output: "Correctly placed Cursor rule file"
 
 metadata:
   priority: high

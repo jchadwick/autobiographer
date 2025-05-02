@@ -1,0 +1,195 @@
+---
+description: TypeScript First Standards
+globs: *.{js,jsx,ts,tsx}
+---
+# TypeScript First Standards
+
+Standards for enforcing TypeScript usage over plain JavaScript to ensure type safety and better developer experience.
+
+<rule>
+name: typescript_first
+description: Enforces the use of TypeScript over JavaScript when creating or modifying code files
+filters:
+  # Match code generation or file edit events
+  - type: event
+    pattern: "file_edit|file_create"
+  # Match JavaScript files
+  - type: file_extension
+    pattern: "\\.js(x)?$"
+
+actions:
+  - type: validate
+    conditions:
+      - has_typescript_equivalent: true
+        message: "JavaScript files should be converted to TypeScript"
+
+  - type: suggest
+    message: |
+      TypeScript should be used instead of JavaScript whenever possible:
+      
+      1. Benefits of using TypeScript:
+         - Static type checking
+         - Better IDE support and tooling
+         - Improved code quality and maintainability
+         - Enhanced refactoring capabilities
+         - Reduced runtime errors
+      
+      2. File conversion guidelines:
+         - .js → .ts
+         - .jsx → .tsx
+         - Add appropriate type annotations
+         - Configure tsconfig.json properly
+      
+      3. When to use TypeScript:
+         - For all new files and components
+         - When refactoring existing JavaScript code
+         - For both frontend and backend development
+      
+      4. Exception cases:
+         - Configuration files that must remain as JavaScript
+         - Files specifically required by tools to be in JavaScript format
+         - Legacy code that cannot be immediately migrated
+
+examples:
+  - input: |
+      # Creating a new React component
+      function UserProfile(props) {
+        const { username, email } = props;
+        return (
+          <div>
+            <h2>{username}</h2>
+            <p>{email}</p>
+          </div>
+        );
+      }
+      export default UserProfile;
+    output: |
+      This should be created as a TypeScript file:
+      ```tsx
+      interface UserProfileProps {
+        username: string;
+        email: string;
+      }
+      
+      function UserProfile(props: UserProfileProps): JSX.Element {
+        const { username, email } = props;
+        return (
+          <div>
+            <h2>{username}</h2>
+            <p>{email}</p>
+          </div>
+        );
+      }
+      export default UserProfile;
+      ```
+
+  - input: |
+      # Creating a utility function
+      function formatDate(date) {
+        return new Date(date).toLocaleDateString();
+      }
+      export default formatDate;
+    output: |
+      This should be created as a TypeScript file:
+      ```ts
+      function formatDate(date: Date | string | number): string {
+        return new Date(date).toLocaleDateString();
+      }
+      export default formatDate;
+      ```
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
+
+<rule>
+name: typescript_configuration
+description: Ensures proper TypeScript configuration when TypeScript files are present in the project
+filters:
+  # Match TypeScript files
+  - type: file_extension
+    pattern: "\\.ts(x)?$"
+  # Match TypeScript configuration file creation or edit
+  - type: file_path
+    pattern: "tsconfig.json"
+
+actions:
+  - type: validate
+    conditions:
+      - tsconfig_exists: true
+        message: "TypeScript project should have a properly configured tsconfig.json file"
+
+  - type: suggest
+    message: |
+      Ensure proper TypeScript configuration for the project:
+      
+      1. Required files:
+         - tsconfig.json in the project root
+         - Separate tsconfig.json files for frontend and backend if needed
+      
+      2. TypeScript compiler options to include:
+         - "strict": true - Enable all strict type checking options
+         - "esModuleInterop": true - Enable better interop with CommonJS modules
+         - "forceConsistentCasingInFileNames": true - Prevent case sensitivity issues
+         - "skipLibCheck": true - Skip type checking of declaration files
+         - "target": "ES2020" or newer - Use modern JavaScript features
+      
+      3. For React projects:
+         - Include "jsx": "react-jsx" option
+         - Set "lib" to include "DOM" and "DOM.Iterable"
+      
+      4. For Node.js backend projects:
+         - Include "module": "commonjs" or "NodeNext"
+         - Set appropriate "outDir" for compiled output
+
+examples:
+  - input: |
+      # Basic TypeScript project
+    output: |
+      Create a tsconfig.json file:
+      ```json
+      {
+        "compilerOptions": {
+          "target": "ES2020",
+          "lib": ["ES2020"],
+          "module": "ESNext",
+          "moduleResolution": "node",
+          "esModuleInterop": true,
+          "strict": true,
+          "skipLibCheck": true,
+          "forceConsistentCasingInFileNames": true,
+          "outDir": "dist"
+        },
+        "include": ["src/**/*"],
+        "exclude": ["node_modules", "dist"]
+      }
+      ```
+
+  - input: |
+      # React TypeScript project
+    output: |
+      Create a tsconfig.json file:
+      ```json
+      {
+        "compilerOptions": {
+          "target": "ES2020",
+          "lib": ["DOM", "DOM.Iterable", "ES2020"],
+          "module": "ESNext",
+          "moduleResolution": "node",
+          "jsx": "react-jsx",
+          "esModuleInterop": true,
+          "strict": true,
+          "skipLibCheck": true,
+          "forceConsistentCasingInFileNames": true,
+          "outDir": "dist"
+        },
+        "include": ["src/**/*"],
+        "exclude": ["node_modules", "dist"]
+      }
+      ```
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>

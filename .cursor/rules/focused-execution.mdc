@@ -1,0 +1,84 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Focused Execution Standards
+
+Standards for maintaining focus on the current task and preventing scope creep.
+
+<rule>
+name: focused_execution_standards
+description: Standards for ensuring AI stays focused on the current task and only modifies relevant code
+filters:
+  # Match any code file
+  - type: file_extension
+    pattern: "\\.(ts|js|tsx|jsx|css|html|md)$"
+  # Match file operations
+  - type: event
+    pattern: "file_edit|file_create|file_delete"
+
+actions:
+  - type: suggest
+    message: |
+      When implementing tasks:
+
+      1. Task Boundaries:
+         - Only modify files directly related to current task
+         - Do not refactor unrelated code
+         - Do not fix unrelated issues
+         - Do not optimize code outside task scope
+         - Defer improvements for future tasks
+
+      2. Code Changes:
+         - Make minimal necessary changes
+         - Focus on one feature at a time
+         - Keep changes isolated to task requirements
+         - Do not introduce speculative functionality
+         - Document task-specific decisions
+
+      3. Scope Management:
+         - Strictly follow task requirements
+         - Do not expand scope during implementation
+         - Create new tasks for identified improvements
+         - Resist urge to "clean up" unrelated code
+         - Focus on completing current task first
+
+      4. Task Completion:
+         - Verify changes meet task requirements
+         - Test only modified functionality
+         - Document only task-related changes
+         - Create focused commit messages
+         - Track only task-specific dependencies
+
+      5. New Issues:
+         - Note unrelated issues for future tasks
+         - Do not fix issues outside current scope
+         - Create separate tasks for discovered problems
+         - Maintain focus on current objective
+         - Document but defer unrelated improvements
+
+examples:
+  - input: |
+      # Current Task: Implement user registration
+      # Discovered: Database queries need optimization
+
+      # Correct Approach:
+      1. Complete user registration implementation
+      2. Add optimization as new task
+      3. Continue with current task
+
+      # Incorrect Approach:
+      1. Pause registration implementation
+      2. Start optimizing database
+      3. Lose focus on primary task
+
+    output: |
+      Stay focused on user registration.
+      Create new task for database optimization.
+      Complete current task before starting new work.
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
