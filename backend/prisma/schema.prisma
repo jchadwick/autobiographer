@@ -3,12 +3,11 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:./dev.db"
 }
 
 model User {
@@ -16,19 +15,17 @@ model User {
   email     String   @unique
   password  String
   name      String?
-  stories   Story[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  stories   Story[]
 }
 
 model Story {
-  id          String   @id @default(uuid())
-  title       String
-  content     String
-  isPublished Boolean  @default(false)
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  metadata    Json?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
 }
