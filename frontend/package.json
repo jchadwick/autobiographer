@@ -5,7 +5,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "echo \"No tests implemented yet\" && exit 0"
   },
   "dependencies": {
     "@types/dompurify": "^3.0.5",

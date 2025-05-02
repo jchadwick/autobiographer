@@ -6,7 +6,7 @@
     "start": "ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "tsc",
     "serve": "node dist/index.js",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "lint": "eslint src --ext ts",
     "type-check": "tsc --noEmit"
   },

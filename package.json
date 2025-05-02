@@ -6,7 +6,6 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"No tests implemented yet\" && exit 0",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
@@ -17,6 +16,9 @@
     "install:frontend": "cd frontend && npm install",
     "install:backend": "cd backend && npm install",
     "typecheck": "tsc --noEmit",
+    "test": "run-p test:*",
+    "test:frontend": "cd frontend && npm test",
+    "test:backend": "cd backend && npm test",
     "prepare": "husky install",
     "build": "run-p build:*",
     "build:frontend": "cd frontend && npm run build",
