@@ -5,42 +5,37 @@
 
 This document outlines the comprehensive delivery plan for the Autobiographer application, breaking down the work into high-level tasks aligned with the development phases specified in the roadmap.
 
-## Phase 1: Foundation (Weeks 1-4)
+## Phase 1: MVP Foundation (Weeks 1-2)
 
 ### Project Setup
-- [ ] Initialize Git repository with proper branching strategy
-- [ ] Set up project structure (frontend and backend)
-- [ ] Configure linting and code formatting tools
-- [ ] Establish CI/CD pipeline with GitHub Actions
-- [ ] Create development, staging, and production environments
+- [x] Initialize Git repository with proper branching strategy
+- [x] Set up project structure (frontend and backend)
+- [x] Configure linting and code formatting tools
+- [ ] Basic GitHub Actions CI (just build and test)
 
-### Database & Storage Implementation
-- [ ] Implement PostgreSQL database schema
-- [ ] Set up MinIO/S3-compatible object storage for files
-- [ ] Create database migration system
-- [ ] Implement database connection pooling
-- [ ] Configure backup and restore procedures
+### Minimal Database Setup
+- [ ] Set up simple SQLite database for rapid development
+- [ ] Create basic user and story tables
+- [ ] Implement basic data migration system
+- [ ] Simple file storage for text content
 
-### User Authentication
-- [ ] Implement user registration system
-- [ ] Create login/logout functionality
-- [ ] Set up JWT-based authentication
-- [ ] Implement password reset flow
-- [ ] Create role-based authorization system
+### Essential Authentication
+- [ ] Basic email/password registration
+- [ ] Simple login/logout functionality
+- [ ] JWT token implementation
+- [ ] Basic user profile
 
-### Basic API Implementation
-- [ ] Set up Express.js server with middleware
-- [ ] Implement user management endpoints
-- [ ] Create question management endpoints
-- [ ] Implement response storage endpoints
-- [ ] Set up API documentation with Swagger/OpenAPI
+### Core Story Creation
+- [ ] Simple text editor integration
+- [ ] Basic story saving functionality
+- [ ] Story listing and viewing
+- [ ] Auto-save implementation
 
-### Frontend Foundation
-- [ ] Set up React application with routing
-- [ ] Implement state management solution
-- [ ] Create responsive layout and UI components
-- [ ] Implement authentication UI
-- [ ] Build basic question display and navigation
+### Basic Frontend
+- [ ] Set up React application with Vite and Tailwind
+- [ ] Create minimal responsive layout
+- [ ] Implement basic navigation
+- [ ] Build simple story editor interface
 
 ## Phase 2: Core Experience (Weeks 5-8)
 
