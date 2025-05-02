@@ -1,0 +1,74 @@
+---
+description: AI Rules Location
+globs: *.mdc
+---
+# AI Rules Location
+
+Rules for placing and organizing AI rule files in the repository.
+
+<rule>
+name: ai_rules_location
+description: Standards for placing AI rule files in the correct directory
+filters:
+  # Match any .mdc files
+  - type: file_extension
+    pattern: "\\.mdc$"
+  # Match files that look like AI rules
+  - type: content
+    pattern: "(?s)<rule>.*?</rule>"
+  # Match file creation events
+  - type: event
+    pattern: "file_create"
+
+actions:
+  - type: reject
+    conditions:
+      - pattern: "^(?!\\/ai-rules\\/.*\\.mdc$)"
+        message: "AI rule files (.mdc) must be placed in the /ai-rules directory"
+
+  - type: suggest
+    message: |
+      When creating AI rules:
+
+      1. Always place rule files in PROJECT_ROOT/ai-rules/:
+         ```
+         /ai-rules/
+         ├── your-rule-name.mdc
+         ├── another-rule.mdc
+         └── ...
+         ```
+
+      2. Follow the naming convention:
+         - Use kebab-case for filenames
+         - Always use .mdc extension
+         - Make names descriptive of the rule's purpose
+
+      3. Directory structure:
+         ```
+         PROJECT_ROOT/
+         ├── ai-rules/
+         │       ├── your-rule-name.mdc
+         │       └── ...
+         └── ...
+         ```
+
+      4. Never place rule files:
+         - In the project root
+         - In subdirectories outside /ai-rules
+         - In any other location
+
+examples:
+  - input: |
+      # Bad: Rule file in wrong location
+      rules/my-rule.mdc
+      my-rule.mdc
+      .rules/my-rule.mdc
+
+      # Good: Rule file in correct location
+      /ai-rules/my-rule.mdc
+    output: "Correctly placed AI rule file"
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
