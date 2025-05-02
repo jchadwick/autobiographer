@@ -1,0 +1,138 @@
+---
+description: Auto-Commit Standards
+globs: *.*
+---
+# Auto-Commit Standards
+
+Standards for automatically committing changes of significant complexity after AI-generated code.
+
+<rule>
+name: auto_commit_significant_changes
+description: Automatically commits changes of significant complexity after AI-generated code to maintain version history
+filters:
+  # Match code generation or file edit events
+  - type: event
+    pattern: "file_edit|file_create"
+  # Match significant code changes (more than 20 lines modified)
+  - type: metric
+    pattern: "lines_changed > 20"
+
+actions:
+  - type: execute
+    command: "git add {changed_files} && git commit -m 'AI-assisted: {description}'"
+    conditions:
+      - files_changed: true
+        message: "Committing significant changes to version control"
+
+  - type: suggest
+    message: |
+      Significant code changes have been detected. These changes will be automatically committed to the repository with the following guidelines:
+      
+      1. The commit message will include:
+         - Prefix: "AI-assisted: "
+         - Description of the changes made
+      
+      2. Auto-commits occur when:
+         - More than 20 lines of code are modified
+         - Multiple files are created or edited
+         - Major architectural changes are implemented
+      
+      3. Before the auto-commit, you may:
+         - Review the changes
+         - Add additional details to the commit message
+         - Opt-out of the auto-commit for this specific change
+
+      4. Best practices for AI-assisted commits:
+         - Keep commits focused on a single logical change
+         - Include meaningful descriptions
+         - Follow project-specific commit message conventions
+         - Consider breaking very large changes into smaller, logical commits
+
+examples:
+  - input: |
+      # Changes:
+      - Created new React component (50 lines)
+      - Updated API service (30 lines)
+      - Modified database schema (15 lines)
+    output: |
+      Git commit created:
+      "AI-assisted: Implement user autobiography response system with React component, API service and database schema updates"
+
+metadata:
+  priority: medium
+  version: 1.0
+</rule>
+
+<rule>
+name: semantic_commit_messages
+description: Enforces the use of semantic commit messages for all commits to maintain clear and consistent version history
+filters:
+  # Match any git commit event
+  - type: event
+    pattern: "git_commit|commit"
+  # Match commit message creation
+  - type: action
+    pattern: "create_commit_message|suggest_commit"
+
+actions:
+  - type: validate
+    conditions:
+      - pattern: "^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\\(\\w+\\))?: .+"
+        message: "Commit message must follow semantic commit format"
+
+  - type: suggest
+    message: |
+      All commits must follow the semantic commit message format:
+      
+      ```
+      <type>(<scope>): <description>
+      
+      [optional body]
+      
+      [optional footer(s)]
+      ```
+      
+      Types:
+      - feat: A new feature
+      - fix: A bug fix
+      - docs: Documentation changes
+      - style: Code style changes (formatting, missing semicolons, etc.)
+      - refactor: Code changes that neither fix bugs nor add features
+      - perf: Performance improvements
+      - test: Adding or modifying tests
+      - build: Build system or external dependency changes
+      - ci: CI configuration changes
+      - chore: Other changes that don't modify src or test files
+      - revert: Reverting previous commits
+      
+      Guidelines:
+      1. The first line should be 72 characters or less
+      2. Second line should be blank
+      3. Description should use imperative, present tense ("add" not "added")
+      4. Include scope in parentheses for added clarity when appropriate
+      5. Break down large changes into multiple commits
+      
+      Examples:
+      - feat(auth): add user authentication system
+      - fix(api): correct response format for error messages
+      - docs(readme): update installation instructions
+      - style: apply consistent indentation to all files
+
+examples:
+  - input: |
+      # Non-semantic commit message
+      Update user code and fix bugs
+    output: |
+      Invalid commit message. Please use semantic format:
+      feat(user): update user profile functionality and fix validation bugs
+  
+  - input: |
+      # Semantic commit message
+      fix(auth): correct token validation for expired sessions
+    output: |
+      Valid semantic commit message
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>

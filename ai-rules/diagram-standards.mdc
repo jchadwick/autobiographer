@@ -1,0 +1,60 @@
+---
+description: Diagram Format Standards
+globs: *.md
+---
+# Diagram Format Standards
+
+Standards for creating and formatting diagrams in documentation.
+
+<rule>
+name: mermaid_diagram_format
+description: Standardizes all diagrams to use Mermaid format for consistency and maintainability
+filters:
+  # Match any Markdown files
+  - type: file_extension
+    pattern: "\\.md$"
+  # Match content that looks like a diagram
+  - type: content
+    pattern: "(?s)```(?!mermaid).*?(?:┌|┐|└|┘|│|─|┬|┴|┼|←|→|↑|↓).*?```"
+
+actions:
+  - type: suggest
+    message: |
+      All diagrams in documentation should use Mermaid format instead of ASCII art or other formats.
+      
+      Convert diagrams to Mermaid format using the appropriate diagram type:
+      
+      ```mermaid
+      flowchart TD
+          A[Start] --> B{Decision}
+          B -->|Yes| C[Process]
+          B -->|No| D[End]
+      ```
+      
+      Common diagram types:
+      - flowchart (TD for top-down, LR for left-right)
+      - sequenceDiagram
+      - classDiagram
+      - stateDiagram-v2
+      - entityRelationshipDiagram
+      - gantt
+      
+      For more information, visit the [Mermaid documentation](https://mermaid-js.github.io/mermaid/#/).
+
+examples:
+  - input: |
+      ```
+      ┌─────┐     ┌─────┐
+      │  A  │---->│  B  │
+      └─────┘     └─────┘
+      ```
+    output: |
+      ```mermaid
+      flowchart LR
+          A --> B
+      ```
+
+metadata:
+  priority: medium
+  version: 1.0
+</rule>
