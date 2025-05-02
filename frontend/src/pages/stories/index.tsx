@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { api } from '../../utils/api';
+import api from '../../utils/api';
 
 interface Story {
   id: string;
@@ -53,7 +53,7 @@ const StoriesPage: React.FC = () => {
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Your Stories</h1>
-        <Link 
+        <Link
           href="/stories/new"
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         >
@@ -64,19 +64,16 @@ const StoriesPage: React.FC = () => {
       {stories.length === 0 ? (
         <p className="text-gray-600">
           You haven't created any stories yet.{' '}
-          <Link 
-            href="/stories/new"
-            className="text-blue-500 hover:underline"
-          >
+          <Link href="/stories/new" className="text-blue-500 hover:underline">
             Create your first story
           </Link>
           .
         </p>
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {stories.map((story) => (
-            <Link 
-              key={story.id} 
+          {stories.map(story => (
+            <Link
+              key={story.id}
               href={`/stories/${story.id}`}
               className="block p-6 border rounded-lg hover:border-blue-500 transition-colors"
             >
@@ -92,4 +89,4 @@ const StoriesPage: React.FC = () => {
   );
 };
 
-export default StoriesPage; 
+export default StoriesPage;
