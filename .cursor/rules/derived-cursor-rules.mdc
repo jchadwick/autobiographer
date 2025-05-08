@@ -1,0 +1,479 @@
+---
+description: AI rules derived by SpecStory from the project AI interaction history
+globs: *
+---
+
+## AI Coding Assistant Rules
+
+### PROJECT DOCUMENTATION & CONTEXT SYSTEM
+
+Rules for placing and organizing Cursor rule files in the repository.
+
+```
+# AI Rules Location
+
+Rules for placing and organizing Cursor rule files in the repository.
+
+<rule>
+name: cursor_rules_location
+description: Standards for placing Cursor rule files in the correct directory
+filters:
+  # Match any .mdc files
+  - type: file_extension
+    pattern: "\\.mdc$"
+
+actions:
+  - type: reject
+    conditions:
+      - pattern: "^(?!\\/.cursor\\/rules\\/.*\\.mdc$)"
+        message: "Cursor rule files (.mdc) must be placed in the /.cursor/rules directory"
+
+  - type: suggest
+    message: |
+      When creating Cursor rules:
+
+      1. Always place rule files in PROJECT_ROOT/.cursor/rules/:
+        ```
+        /.cursor/rules/
+        ├── your-rule-name.mdc
+        ├── another-rule.mdc
+        ```
+        PROJECT_ROOT/
+        ├── .cursor/
+        │   └── rules/
+        │       ├── your-rule-name.mdc
+        │       └── ...
+        ```
+
+        2. Organize rule files logically by feature/component
+        3. Add clear descriptions and metadata
+        4. Never place rule files:
+           - In the project root
+           - In subdirectories outside /.cursor/rules
+           - In any other location
+
+examples:
+  - input: |
+      # Rule file in incorrect location
+      my-rule.mdc
+    output: "Incorrectly placed Cursor rule file"
+  - input: |
+      # Rule file in correct location
+      /.cursor/rules/my-rule.mdc
+    output: "Correctly placed Cursor rule file"
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
+
+```
+
+Version: 1.0 (2025-05-02) - Updated file path to point to `.cursor/rules` directory.
+
+
+### TECH STACK
+
+- Next.js 14
+- TypeScript
+- React
+- React-Quill
+- Tailwind CSS
+- Prisma
+- PostgreSQL (or SQLite for development)
+- Express.js
+- Node.js
+- bcryptjs
+- jsonwebtoken
+- uuid
+- Playwright (for testing)
+- Lodash
+- DOMPurify
+- Husky
+- Lint-staged
+- @commitlint/cli
+- @commitlint/config-conventional
+- eslint
+- @typescript-eslint/eslint-plugin
+- @typescript-eslint/parser
+- eslint-plugin-react
+- eslint-plugin-react-hooks
+- @next/eslint-plugin-next
+- eslint-plugin-prettier
+- eslint-config-prettier
+
+
+### WORKFLOW & RELEASE RULES
+
+Commit everything that's outstanding then open up the task list in tasks.MD and start implementing tasks.
+
+Always use semantic commit messages.  All commits must follow the semantic commit message format.
+
+Never remove or delete tasks from the task list.  Only update tasks to mark them as done or move them around.
+
+Always be looking for new tasks to add to the task list and add them whenever you find them.
+
+### DEBUGGING
+
+When implementing tasks: Only modify files directly related to current task. Do not refactor unrelated code. Do not fix unrelated issues. Do not optimize code outside task scope. Defer improvements for future tasks.
+
+
+### TASK MANAGEMENT STANDARDS
+
+Standards for managing and maintaining project tasks.
+
+```
+# Task Management Standards
+
+Standards for managing and maintaining project tasks.
+
+<rule>
+name: task_management_standards
+description: Standards for managing project tasks and task lists
+filters:
+  # Match task-related files
+  - type: file_extension
+    pattern: "\\.md$"
+  # Match task-related content
+  - type: content
+    pattern: "(?m)^\\s*-\\s*\\[[ x]\\]"
+  # Match task file operations
+  - type: event
+    pattern: "file_edit|file_create"
+
+actions:
+  - type: suggest
+    message: |
+      When managing tasks:
+
+      1. Task List Location:
+         - Keep task lists in PROJECT_ROOT/.tasks/
+         - Main task file should be TASKS.md
+         - Task files should not be in source control
+         - Create task-specific files for large features
+
+      2. Task List Maintenance:
+         - Never delete tasks
+         - Only mark tasks as complete [x] or incomplete [ ]
+         - Move tasks between sections when priorities change
+         - Keep completed tasks in the list for historical record
+         - Add new tasks whenever identified during development
+
+      3. Task Format:
+         ```markdown
+         - [ ] Task description
+         - [x] Completed task
+         ```
+
+      4. Task Organization:
+         - Group tasks by feature/component
+         - Order by priority within groups
+         - Include estimated complexity/effort
+         - Add subtasks for complex items
+         - Track dependencies between tasks
+
+      5. Continuous Task Discovery:
+         - Add new tasks when technical debt is identified
+         - Create tasks for future improvements
+         - Document potential optimizations
+         - Note security considerations
+         - Track accessibility requirements
+
+      6. Task Updates:
+         - Keep original task descriptions
+         - Add notes about implementation decisions
+         - Document any blockers encountered
+         - Track time spent on tasks
+         - Note related tasks or dependencies
+
+examples:
+  - input: |
+      # Original task
+      - [ ] Implement user authentication
+
+      # Updated task (correct)
+      - [x] Implement user authentication
+        Notes:
+        - Used JWT for token management
+        - Added rate limiting
+        - Future consideration: OAuth integration
+
+      # Deleted task (incorrect)
+      [Task removed]
+    output: |
+      Tasks should be marked complete, not deleted.
+      Add notes about implementation and future considerations.
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
+
+```
+
+Version: 1.0 (2025-05-02) - Created rule for managing tasks, moved TASKS.md to `.tasks` directory and excluded from source control.
+
+### FOCUSED EXECUTION STANDARDS
+
+Standards for maintaining focus on the current task and preventing scope creep.
+
+```
+# Focused Execution Standards
+
+Standards for maintaining focus on the current task and preventing scope creep.
+
+<rule>
+name: focused_execution_standards
+description: Standards for ensuring AI stays focused on the current task and only modifies relevant code
+filters:
+  # Match any code file
+  - type: file_extension
+    pattern: "\\.(ts|js|tsx|jsx|css|html|md)$"
+  # Match file operations
+  - type: event
+    pattern: "file_edit|file_create|file_delete"
+
+actions:
+  - type: suggest
+    message: |
+      When implementing tasks:
+
+      1. Task Boundaries:
+         - Only modify files directly related to current task
+         - Do not refactor unrelated code
+         - Do not fix unrelated issues
+         - Do not optimize code outside task scope
+         - Defer improvements for future tasks
+
+      2. Code Changes:
+         - Make minimal necessary changes
+         - Focus on one feature at a time
+         - Keep changes isolated to task requirements
+         - Do not introduce speculative functionality
+         - Document task-specific decisions
+
+      3. Scope Management:
+         - Strictly follow task requirements
+         - Do not expand scope during implementation
+         - Create new tasks for identified improvements
+         - Resist urge to "clean up" unrelated code
+         - Focus on completing current task first
+
+      4. Task Completion:
+         - Verify changes meet task requirements
+         - Test only modified functionality
+         - Document only task-related changes
+         - Create focused commit messages
+         - Track only task-specific dependencies
+
+      5. New Issues:
+         - Note unrelated issues for future tasks
+         - Do not fix issues outside current scope
+         - Create separate tasks for discovered problems
+         - Maintain focus on current objective
+         - Document but defer unrelated improvements
+
+examples:
+  - input: |
+      # Current Task: Implement user registration
+      # Discovered: Database queries need optimization
+
+      # Correct Approach:
+      1. Complete user registration implementation
+      2. Add optimization as new task
+      3. Continue with current task
+
+      # Incorrect Approach:
+      1. Pause registration implementation
+      2. Start optimizing database
+      3. Lose focus on primary task
+
+    output: |
+      Stay focused on user registration.
+      Create new task for database optimization.
+      Complete current task before starting new work.
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
+
+```
+
+Version: 1.0 (2025-05-02) - Created rule to ensure focused execution and prevent scope creep.
+
+### REACT COMPONENT STANDARDS
+
+Standards for writing React components in TypeScript.
+
+```
+# React Component Standards
+
+Standards for writing React components in TypeScript, focusing on type safety and modern practices
+
+<rule>
+name: react_component_standards
+description: Standards for writing React components in TypeScript, focusing on type safety and modern practices
+filters:
+  # Match React component files
+  - type: file_extension
+    pattern: "\\.tsx?$"
+  # Match files containing React components
+  - type: content
+    pattern: "React|Component|jsx"
+
+actions:
+  - type: validate
+    conditions:
+      - pattern: "React\\.FC"
+        message: "Do not use React.FC type. Instead, define props interface and use function declaration with explicit props type."
+
+  - type: suggest
+    message: |
+      Follow these standards for React components:
+
+      1. Props Type Definition:
+         - DO NOT use React.FC or React.FunctionComponent
+         - Always define a props interface
+         - Use type inference for the component return type
+
+         ```tsx
+         // ❌ Don't do this:
+         const MyComponent: React.FC<MyProps> = ({ prop1, prop2 }) => {
+           return <div>{prop1}</div>;
+         };
+
+         // ✅ Do this instead:
+         interface MyComponentProps {
+           prop1: string;
+           prop2?: number;
+         }
+
+         function MyComponent({ prop1, prop2 }: MyComponentProps) {
+           return <div>{prop1}</div>;
+         }
+         ```
+
+      2. Benefits of avoiding React.FC:
+         - Better type inference for default props
+         - No implicit children prop when not needed
+         - More explicit about component structure
+         - Follows official TypeScript-React documentation recommendations
+
+      3. Component Declaration:
+         - Use function declarations for components (not arrow functions)
+         - Name components using PascalCase
+         - Keep components pure when possible
+         - Split complex components into smaller, focused ones
+
+examples:
+  - input: |
+      // Component with React.FC
+      const UserProfile: React.FC<UserProfileProps> = ({ name, email }) => {
+        return (
+          <div>
+            <h2>{name}</h2>
+            <p>{email}</p>
+          </div>
+        );
+      };
+    output: |
+      // Properly typed component
+      interface UserProfileProps {
+        name: string;
+        email: string;
+      }
+
+      function UserProfile({ name, email }: UserProfileProps) {
+        return (
+          <div>
+            <h2>{name}</h2>
+            <p>{email}</p>
+          </div>
+        );
+      }
+
+  - input: |
+      // Generic component with React.FC
+      const List: React.FC<{ items: T[] }> = ({ items }) => {
+        return (
+          <ul>
+            {items.map((item) => (
+              <li key={item.id}>{item.name}</li>
+            ))}
+          </ul>
+        );
+      };
+    output: |
+      // Properly typed generic component
+      interface ListProps<T> {
+        items: T[];
+      }
+
+      function List<T extends { id: string | number; name: string }>({
+        items
+      }: ListProps<T>) {
+        return (
+          <ul>
+            {items.map((item) => (
+              <li key={item.id}>{item.name}</li>
+            ))}
+          </ul>
+        );
+      }
+
+metadata:
+  priority: high
+  version: 1.0
+  tags:
+    - react
+    - typescript
+    - components
+</rule>
+
+```
+
+Version: 1.0 (2025-05-02) - Created rule for React component standards, focusing on avoiding `React.FC`.
+
+### AI AUTONOMY RULE
+
+To maximize the productivity and efficiency of AI-assisted development by empowering the AI to operate as independently as possible, minimizing interruptions and unnecessary questions to the human user.
+
+```
+# AI Autonomy Rule
+
+## Purpose
+To maximize the productivity and efficiency of AI-assisted development by empowering the AI to operate as independently as possible, minimizing interruptions and unnecessary questions to the human user.
+
+## Directives
+
+1. **Proactive Action:**
+   - The AI should take all reasonable steps to move development forward without waiting for explicit user instructions.
+   - When encountering errors, bugs, or unclear situations, the AI should attempt to diagnose and resolve issues autonomously before consulting the user.
+
+2. **Minimize User Prompts:**
+   - Only ask the user for input when absolutely necessary (e.g., when a decision cannot be made from available context or documentation).
+   - Avoid asking for confirmation on routine or reversible actions (e.g., restarting servers, re-running tests, reading files, or applying standard fixes).
+   - When a choice is required, make a sensible default selection and proceed, informing the user of the action taken.
+
+3. **Self-Diagnosis and Remediation:**
+   - Upon encountering errors, exceptions, or failed tests, the AI should:
+     - Analyze logs, stack traces, and code to identify the root cause.
+     - Attempt targeted fixes and verify their effectiveness.
+     - Document the problem and solution for transparency.
+
+4. **Continuous Progress:**
+   - The AI should chain together logical steps (e.g., code edits, server restarts, browser checks) to achieve goals without pausing for user approval at each step.
+   - If a task is blocked, the AI should explore alternative solutions or workarounds before escalating to the user.
+
+5. **Transparency and Reporting:**
+   - Summarize actions taken, problems encountered, and solutions applied in clear, concise updates.
+   - Only escalate to the user when a problem cannot be resolved autonomously or when a critical decision is required.
+
+## Example Behaviors
+- If a runtime error occurs, the AI diagnoses, applies a fix, restarts the app, and verifies the result before reporting back.
+- When a new feature is requested, the AI plans, implements, tests, and documents the feature with minimal user input.
+- If configuration or environment issues are detected, the AI attempts to resolve them (e.g., by installing dependencies, updating configs) before asking for help.
+```
+
+Version: 1.0 (2025-05-02) - Created rule to encourage maximum AI autonomy during development.
