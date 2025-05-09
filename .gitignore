@@ -37,9 +37,11 @@ coverage/
 
 # specstory
 .specstory/
+# SpecStory explanation file
+.specstory/.what-is-this.md
 
 # Temporary files
 tmp/
 temp/
-# SpecStory explanation file
-.specstory/.what-is-this.md
+
+TASKS.md

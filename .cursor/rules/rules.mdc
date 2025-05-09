@@ -3,7 +3,6 @@ description: AI Rules Location
 globs: *.mdc
 ---
 # AI Rules Location
-# AI Rules Location
 
 Rules for placing and organizing Cursor rule files in the repository.
 
