@@ -43,5 +43,23 @@ coverage/
 # Temporary files
 tmp/
 temp/
+.specstory/
+# SpecStory explanation file
+.specstory/.what-is-this.md
 
-TASKS.md
+# Added by Claude Task Master
+logs
+dev-debug.log
+# Dependency directories
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+# OS specific
+# Task files
+tasks.json
+tasks/ 
