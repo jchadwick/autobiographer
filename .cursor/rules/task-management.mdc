@@ -27,18 +27,15 @@ actions:
       When managing tasks:
 
       1. Task List Location:
-         - Keep task lists in PROJECT_ROOT/.tasks/
-         - Main task file should be TASKS.md
-         - Task files should not be in source control
-         - Create task-specific files for large features
+         - Store all tasks in a single file, TASKS.md
 
       2. Task List Maintenance:
+         - Add new tasks whenever identified during development or planning
          - Never delete tasks
          - Only mark tasks as complete [x] or incomplete [ ]
          - ALWAYS mark tasks as complete immediately after they are completed
          - Move tasks between sections when priorities change
          - Keep completed tasks in the list for historical record
-         - Add new tasks whenever identified during development
 
       3. Task Format:
          ```markdown

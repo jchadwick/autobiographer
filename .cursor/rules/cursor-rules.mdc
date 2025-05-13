@@ -1,0 +1,101 @@
+---
+description: Manages how Cursor rules are defined and maintained
+globs: **/*
+alwaysApply: true
+---
+# Cursor Rules: Structure, Content, and Placement
+
+## Required Rule Structure
+```markdown
+---
+description: Clear, one-line description of what the rule enforces
+globs: path/to/files/*.ext, other/path/**/*
+alwaysApply: boolean
+---
+
+- **Main Points in Bold**
+  - Sub-points with details
+  - Examples and explanations
+```
+
+## File References
+- Use `[filename](mdc:path/to/file)` ([filename](mdc:filename)) to reference files
+- Example: [prisma.mdc](mdc:.cursor/rules/prisma.mdc) for rule references
+- Example: [schema.prisma](mdc:prisma/schema.prisma) for code references
+
+## Code Examples
+- Use language-specific code blocks
+```typescript
+// ✅ DO: Show good examples
+const goodExample = true;
+
+// ❌ DON'T: Show anti-patterns
+const badExample = false;
+```
+
+## Rule Content Guidelines
+- Start with high-level overview
+- Include specific, actionable requirements
+- Show examples of correct implementation
+- Reference existing code when possible
+- Keep rules DRY by referencing other rules
+
+## Rule Maintenance
+- Update rules when new patterns emerge
+- Add examples from actual codebase
+- Remove outdated patterns
+- Cross-reference related rules
+
+## Best Practices
+- Use bullet points for clarity
+- Keep descriptions concise
+- Include both DO and DON'T examples
+- Reference actual code over theoretical examples
+- Use consistent formatting across rules
+
+---
+
+# Cursor Rule File Placement and Naming Standards
+
+## Directory Structure
+- Always place rule files in `PROJECT_ROOT/.cursor/rules/`:
+  ```
+  /.cursor/rules/
+  ├── your-rule-name.mdc
+  ├── another-rule.mdc
+  └── ...
+  ```
+- Never place rule files:
+  - In the project root
+  - In subdirectories outside `/.cursor/rules`
+  - In any other location
+
+## Naming Convention
+- Use kebab-case for filenames
+- Always use `.mdc` extension
+- Make names descriptive of the rule's purpose
+
+## Example Directory Structure
+```
+PROJECT_ROOT/
+├── .cursor/
+│   └── rules/
+│       ├── your-rule-name.mdc
+│       └── ...
+└── ...
+```
+
+## Examples
+- Bad: Rule file in wrong location
+  - `rules/my-rule.mdc`
+  - `my-rule.mdc`
+  - `.rules/my-rule.mdc`
+- Good: Rule file in correct location
+  - `/.cursor/rules/my-rule.mdc`
+
+---
+
+# Summary
+- Follow the required rule structure and best practices for all Cursor rules.
+- Place all rule files in `.cursor/rules/` using kebab-case and `.mdc` extension.
+- Reference and cross-link rules for maintainability and clarity.

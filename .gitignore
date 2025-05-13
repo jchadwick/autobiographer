@@ -61,5 +61,6 @@ dev-debug.log
 *.sw?
 # OS specific
 # Task files
+TASKS.md
 tasks.json
 tasks/ 
